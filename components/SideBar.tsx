@@ -1,7 +1,7 @@
 "use client";
 
 import NewChat from "./NewChat";
-import { useSession } from "next-auth/react";
+import { useSession, signOut } from "next-auth/react";
 
 const SideBar = () => {
   const { data: session } = useSession();
@@ -19,6 +19,7 @@ const SideBar = () => {
       </div>
       {session && (
         <img
+          onClick={() => signOut()}
           src={session.user?.image!}
           alt="Profile Picture"
           className="w-12 h-12 mx-auto mb-2 rounded-full cursor-pointer hover:opacity-50"
