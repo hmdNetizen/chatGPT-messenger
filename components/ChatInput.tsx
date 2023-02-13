@@ -13,7 +13,7 @@ type Props = {
 
 const ChatInput = ({ chatId }: Props) => {
   const [prompt, setPrompt] = useState("");
-  const model = "text-davinci-03";
+  const model = "text-davinci-003";
 
   const { data: session } = useSession();
 
@@ -50,13 +50,13 @@ const ChatInput = ({ chatId }: Props) => {
     );
 
     // Toast notification to say loading...
-    const notification = toast.loading("ChatGPT is thinking...");
+    toast.loading("ChatGPT is thinking...");
 
     await fetch("/api/askQuestion", {
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      method: "POST",
       body: JSON.stringify({
         prompt: input,
         chatId,
@@ -65,9 +65,7 @@ const ChatInput = ({ chatId }: Props) => {
       }),
     }).then(() => {
       // Toast notification to say success
-      toast.success("ChatGPT has responded", {
-        id: notification,
-      });
+      toast.success("ChatGPT has responded");
     });
   };
 
